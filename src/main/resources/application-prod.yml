@@ -1,0 +1,49 @@
+server:
+  port: 8080
+  compression:
+    enabled: true
+  error:
+    include-message: always
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    date-format: "dd/MM/yyyy"
+    time-zone: Europe/Athens
+    serialization:
+      write_dates_as_timestamps: false
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
+  output:
+    ansi:
+      enabled: always
+
+logging:
+  level:
+    org:
+      springframework:
+        web: info
+    eu:
+      icarus: debug
+  file:
+    path: ${java.io.tmpdir}
+    name: ${logging.file.path}/decryption.log
+
+token:
+  signer:
+    secret: ${TOKEN_SIGNER_SECRET}
+
+icarus:
+  keypair:
+    url: ${ICARUS_KEYPAIR_URL}
+    username: ${ICARUS_KEYPAIR_USERNAME}
+    password: ${ICARUS_KEYPAIR_PASSWORD}
+  server:
+    url: ${ICARUS_SERVER_URL}
+  mongodb:
+    url: ${ICARUS_MONGODB_URL}
+  decryption:
+    jwt: ${ICARUS_DECRYPTION_JWT}
+    file-path: ${ICARUS_DECRYPTION_FILE_PATH}
+    batch-size: ${ICARUS_DECRYPTION_BATCH_SIZE}

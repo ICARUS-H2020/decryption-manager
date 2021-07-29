@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  decryption:
+    build: .
+    image: <image_name>
+    container_name: icarus_secure_space_worker_decryption
+    ports:
+      - "8087:8080"
+    volumes:
+      - icarus-secure-space-worker-decrypted-files:/tmp/decryption/csv
+    env_file:
+      - env/decryption.env
+    networks:
+      - icarus-secure-space-worker-network
+    logging:
+      options:
+        max-size: "5m"
+        max-file: "5"
+    command: bash -c "java -Xms256M -Xmx3072M -jar decryption.jar"
+
+networks:
+  icarus-secure-space-worker-network:
+    name: icarus_secure_space_worker_network
+    driver: bridge
+
+volumes:
+  icarus-secure-space-worker-decrypted-files:
+    name: icarus_secure_space_worker_decrypted_files
+    driver: local
